@@ -9,6 +9,7 @@ const initialState = {
     isLoading: false,
     isError: false,
     isSuccess: false,
+    isSignOut: false,
 }
 
 export const loginSlice = createSlice({
@@ -16,6 +17,13 @@ export const loginSlice = createSlice({
     initialState,
     reducers: {
         resetAuthState: (state) => {
+            state.userType = null;
+            state.isLoading = false;
+            state.isError = false;
+            state.isSuccess = false;
+        },
+        signOutState: (state) => {
+            state.isSignOut = true;
             state.userType = null;
             state.isLoading = false;
             state.isError = false;
@@ -35,7 +43,6 @@ export const loginSlice = createSlice({
                 state.isLoading = false;
                 state.isError = false;
                 state.isSuccess = true;
-
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.userType = action.payload;
@@ -54,7 +61,6 @@ export const loginSlice = createSlice({
                 state.isLoading = false;
                 state.isError = false;
                 state.isSuccess = true;
-
             })
             .addCase(signupUser.rejected, (state, action) => {
                 state.userType = action.payload;
@@ -62,6 +68,19 @@ export const loginSlice = createSlice({
                 state.isError = true;
                 state.isSuccess = false;
             })
+            .addCase(signOutUser.pending, (state) => {
+                state.isLoading = true;
+                state.isSignOut = false;
+            })
+            .addCase(signOutUser.fulfilled, (state) => {
+                state.isLoading = false;
+                state.isSignOut = true;
+                state.userType = null;
+            })
+            .addCase(signOutUser.rejected, (state) => {
+                state.isLoading = false;
+                state.isSignOut = false;
+            });
 }})
 
 
@@ -95,6 +114,16 @@ export const signupUser = createAsyncThunk('signup/signupUser', async ({email, p
     }
 })
 
+import { signOut } from "firebase/auth";
+export const signOutUser = createAsyncThunk('signOut/signOutUser', async(_, thunkAPI) => {
+    try {
+        await signOut(auth);
+        localStorage.removeItem("userId");
+        return true;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+    }
+})
 
 export default loginSlice.reducer;
-export const { resetAuthState } = loginSlice.actions;
+export const { resetAuthState, signOutState } = loginSlice.actions;

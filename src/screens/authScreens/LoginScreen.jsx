@@ -81,9 +81,7 @@ const LoginScreen = () => {
   }, [isSuccess, userType, navigate, isError]);
 
   useEffect(() => {
-    return () => {
-      dispatch(resetAuthState());
-    };
+    dispatch(resetAuthState());
   }, [dispatch]);
 
   if (isLoading) {
@@ -98,8 +96,11 @@ const LoginScreen = () => {
             Login Screen
           </Typography>
           <Typography variant="body2" sx={{ marginY: "15px" }}>
-            Welcome to the Learning Management System...
+            Welcome to the Restaurant Management System...
             <br />Please Login to continue.
+          </Typography>
+          <Typography variant="body2" sx={{ marginY: "10px", color: "#d32f2f", fontWeight: 600 }}>
+            Admin Credentials ID: <b>abdullah@gmail.com</b> Password: <b>123123</b>
           </Typography>
           <form onSubmit={(e) => {
             e.preventDefault();

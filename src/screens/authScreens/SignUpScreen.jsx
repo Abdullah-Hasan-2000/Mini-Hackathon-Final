@@ -69,7 +69,7 @@ const SignUpScreen = () => {
                         SignUp Screen
                     </Typography>
                     <Typography variant="body2" sx={{ marginY: "15px" }}>
-                        Welcome to the Learning Management System...
+                        Welcome to the Restaurant Management System...
                         <br />Please SignUp to continue.
                     </Typography>
                     <form onSubmit={(e) => {
