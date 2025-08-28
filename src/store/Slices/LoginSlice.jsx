@@ -14,7 +14,14 @@ const initialState = {
 export const loginSlice = createSlice({
     name: 'Login',
     initialState,
-    reducers: {},
+    reducers: {
+        resetAuthState: (state) => {
+            state.userType = null;
+            state.isLoading = false;
+            state.isError = false;
+            state.isSuccess = false;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(loginUser.pending, (state) => {
@@ -31,7 +38,7 @@ export const loginSlice = createSlice({
 
             })
             .addCase(loginUser.rejected, (state, action) => {
-                state.userType = null;
+                state.userType = action.payload;
                 state.isLoading = false;
                 state.isError = true;
                 state.isSuccess = false;
@@ -50,7 +57,7 @@ export const loginSlice = createSlice({
 
             })
             .addCase(signupUser.rejected, (state, action) => {
-                state.userType = null;
+                state.userType = action.payload;
                 state.isLoading = false;
                 state.isError = true;
                 state.isSuccess = false;
@@ -58,7 +65,7 @@ export const loginSlice = createSlice({
 }})
 
 
-export const loginUser = createAsyncThunk('login/loginUser', async ({email,password}) => {
+export const loginUser = createAsyncThunk('login/loginUser', async ({email,password}, thunkAPI) => {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         console.log(userCredential.user.uid);
@@ -69,12 +76,14 @@ export const loginUser = createAsyncThunk('login/loginUser', async ({email,passw
         console.log("User type is:", userData);
         return userData;
         
+
     } catch (error) {
-        throw new Error(error.message);
+        console.log("Login error:", error.message);
+        return thunkAPI.rejectWithValue(error.message);
     }
 })
 
-export const signupUser = createAsyncThunk('signup/signupUser', async ({email, password}) => {
+export const signupUser = createAsyncThunk('signup/signupUser', async ({email, password}, thunkAPI) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         console.log(userCredential.user.uid);
@@ -82,9 +91,10 @@ export const signupUser = createAsyncThunk('signup/signupUser', async ({email, p
         const docRef = doc(db, "users", userCredential.user.uid);
         await setDoc(docRef, { email, type: "user" });
     } catch (error) {
-        throw new Error(error.message);
+        thunkAPI.rejectWithValue(error.message);
     }
 })
 
 
 export default loginSlice.reducer;
+export const { resetAuthState } = loginSlice.actions;

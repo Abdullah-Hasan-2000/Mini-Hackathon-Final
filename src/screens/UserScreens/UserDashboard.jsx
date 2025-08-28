@@ -1,8 +1,11 @@
 import React from 'react'
 
 const UserDashboard = () => {
+    
   return (
-    <div>UserDashboard</div>
+    <>
+    <p>User Dashboard</p>
+    </>
   )
 }
 

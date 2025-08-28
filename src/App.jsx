@@ -6,9 +6,10 @@ import UserDashboard from './screens/UserScreens/UserDashboard.jsx'
 import AdminDashboard from './screens/AdminScreens/AdminDashboard.jsx'
 import SignUpScreen from './screens/authScreens/SignUpScreen.jsx'
 import ManagerDashboard from './screens/ManagerScreens/ManagerDashboard.jsx'
+import { ToastContainer, Bounce } from 'react-toastify'
 
 function App() {
-  
+
 
   return (
     <>
@@ -20,6 +21,20 @@ function App() {
         <Route path='/signup' element={<SignUpScreen />} />
         <Route path='/manager-dashboard' element={<ManagerDashboard />} />
       </Routes>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </>
   )
 }

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+
+import React, { useState, useEffect } from 'react';
 import { Box, Paper } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import InputField from '../../components/InputFields/InputField';
@@ -6,28 +7,88 @@ import SubmitButton from '../../components/Buttons/SubmitButton';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../store/Slices/LoginSlice';
+import { toast, Bounce } from 'react-toastify';
+import Loader from '../../components/Loader/Loader';
+import {resetAuthState} from '../../store/Slices/LoginSlice';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {isLoading, isError, isSuccess, userType} = useSelector((state) => state.Login);
+  const { isLoading, isError, isSuccess, userType } = useSelector((state) => state.Login);
 
   const handleLogin = () => {
-      console.log("Login attempted with email:", email, "and password", password)
-      dispatch(loginUser({ email, password }))
+    console.log("Login attempted with email:", email, "and password", password)
+    dispatch(loginUser({ email, password }))
   };
+
+
 
   useEffect(() => {
     if (isSuccess && userType === "admin") {
       navigate("/admin-dashboard");
+      toast.success('Login Successful, Welcome Admin!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     } else if (isSuccess && userType === "user") {
       navigate("/user-dashboard");
+      toast.success('Login Successful, Welcome User!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     } else if (isSuccess && userType === "manager") {
       navigate("/manager-dashboard");
-    }
-  }, [isSuccess, userType, navigate]);
+      toast.success('Login Successful, Welcome Manager!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } if (isError) {
+    toast.error('Login Failed, Reason: ' + userType, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  }
+  }, [isSuccess, userType, navigate, isError]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetAuthState());
+    };
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -54,7 +115,7 @@ const LoginScreen = () => {
             Don't have an account? <Link to="/signup">Sign Up</Link>
           </Typography>
         </Paper>
-      </Box> 
+      </Box>
     </>
   )
 }
