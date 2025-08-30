@@ -12,32 +12,34 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
-import SchoolIcon from '@mui/icons-material/School';
 import { useDispatch, useSelector } from 'react-redux';
 import { signOutUser, resetAuthState } from '../../store/Slices/LoginSlice';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+import { toast, Bounce } from 'react-toastify';
+
 
 const pages = ['Products', 'Pricing', 'Blog'];
 
 
 
 function AdminNavbar() {
-    
-    const [anchorElNav, setAnchorElNav] = useState(null);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [anchorElUser, setAnchorElUser] = useState(null);
 
-    
-
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
+    const handleLogout = () => {
+        dispatch(signOutUser());
+        navigate('/');
     };
+
+    useEffect(() => {
+        dispatch(resetAuthState());
+    }, [dispatch]);
+    
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
     };
 
     const handleCloseUserMenu = () => {
@@ -48,12 +50,12 @@ function AdminNavbar() {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <SchoolIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <FastfoodIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
                         noWrap
                         component="a"
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate('/admin-dashboard')}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -65,11 +67,11 @@ function AdminNavbar() {
                             cursor: 'pointer',
                         }}
                     >
-                        LEARNING MANAGEMENT SYSTEM
+                        RESTAURANT MANAGEMENT SYSTEM
                     </Typography>
 
-                    
-                    <SchoolIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+
+                    <FastfoodIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                     <Typography
                         variant="h5"
                         noWrap
@@ -86,7 +88,7 @@ function AdminNavbar() {
                             textDecoration: 'none',
                         }}
                     >
-                        LEARNING MANAGEMENT SYSTEM
+                        RESTAURANT MANAGEMENT SYSTEM
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}></Box>
                     <Box sx={{ flexGrow: 0 }}>
@@ -113,7 +115,7 @@ function AdminNavbar() {
                         >
                             <MenuItem onClick={handleCloseUserMenu}>
                                 <Typography sx={{ textAlign: 'center' }}>
-                                    <Button sx={{ color: 'black' }} >Logout</Button>
+                                    <Button onClick={handleLogout} sx={{ color: 'black' }} >Logout</Button>
                                 </Typography>
                             </MenuItem>
                         </Menu>

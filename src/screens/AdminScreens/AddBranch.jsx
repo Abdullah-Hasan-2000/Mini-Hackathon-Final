@@ -14,8 +14,8 @@ const AdminDashboard = () => {
           </div>
           <Box sx={{ marginLeft: 2, width: '100%' }}>
             <Paper elevation={3} sx={{ paddingX: 2, paddingTop: 2, width: '95%', height: '100vh' }}>
-              <h1>Dashboard</h1>
-              <p>Welcome to the Dashboard!</p>
+              <h1>Add New Branch</h1>
+              
             </Paper>
           </Box>
         </Box>

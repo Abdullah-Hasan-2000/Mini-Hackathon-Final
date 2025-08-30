@@ -1,4 +1,4 @@
-import { use, useState } from 'react'
+import { useState } from 'react'
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -10,14 +10,9 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import { MdOutlineSubject } from "react-icons/md";
 import { MdDateRange } from "react-icons/md";
 import { FaSchool } from "react-icons/fa";
-import { SiGoogleclassroom } from "react-icons/si";
-import { CiMoneyBill } from "react-icons/ci";
-import { ImEnter } from "react-icons/im";
-import { PiExam } from "react-icons/pi";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { CiBoxList } from "react-icons/ci";
 import { FaWpforms } from "react-icons/fa";
-import { RiCalendarScheduleLine } from "react-icons/ri";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Paper } from '@mui/material';
@@ -84,7 +79,7 @@ export default function NavigationBar() {
             {item.nested.map((e, i) => (
               <Collapse key={i} in={openIndex === idx} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <ListItemButton onClick={() => navigate(`/${e[0].toLowerCase().replace(" ", "-")}`)} sx={{ pl: 4 }}>
+                  <ListItemButton onClick={() => navigate(`/${e[0].toLowerCase().replaceAll(" ", "-")}`)} sx={{ pl: 4 }}>
                     <ListItemIcon>{e[1]}</ListItemIcon>
                     <ListItemText primary={e[0]} />
                   </ListItemButton>

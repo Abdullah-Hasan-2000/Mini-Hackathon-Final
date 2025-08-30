@@ -17,6 +17,7 @@ export const loginSlice = createSlice({
     initialState,
     reducers: {
         resetAuthState: (state) => {
+            state.isSignOut = false;
             state.userType = null;
             state.isLoading = false;
             state.isError = false;
