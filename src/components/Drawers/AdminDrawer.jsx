@@ -26,7 +26,7 @@ export default function NavigationBar() {
     {
       label: "Branch Management",
       icon: <PiStudent style={{ width: '24px', height: '24px' }} />,
-      nested: [["Add Branch", <IoMdAddCircleOutline style={{ width: '24px', height: '24px' }} />], ["Branch List", <CiBoxList style={{ width: '24px', height: '24px' }} />], ["Assign Login Credentials", <CiBoxList style={{ width: '24px', height: '24px' }} />]]
+      nested: [["Branch List", <CiBoxList style={{ width: '24px', height: '24px' }} />], ["Assign Login Credentials", <CiBoxList style={{ width: '24px', height: '24px' }} />]]
     },
     {
       label: "Product Management",
