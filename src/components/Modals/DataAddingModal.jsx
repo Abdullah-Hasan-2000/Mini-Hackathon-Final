@@ -14,12 +14,12 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: '600px',
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  
   boxShadow: 24,
   p: 4,
 };
 
-export default function BasicModal({ open, handleClose }) {
+export default function BasicModal({ open, handleClose, addData }) {
   return (
     <div>
       <Modal
@@ -28,26 +28,23 @@ export default function BasicModal({ open, handleClose }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Paper elevation={3} sx={{ paddingX: 2, paddingY: 2, width: '95%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Paper elevation={8} sx={style}>
+          <Box sx={{ paddingX: 2, paddingY: 2, width: '95%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <h1>Add New Branch</h1>
               <Box sx={{ marginTop: 2, width: '75%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Paper elevation={5}>
+                <Box>
                   <form>
-                    <Box sx={{ padding: 3, width: '500px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 3 }}>
-                      
-                        <InputField label="Branch Name" type="text" id="branchName" name="branchName" required />
-                      
-                      
+                    <Box sx={{ padding: 3, width: '500px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 3 }}>    
+                        <InputField label="Branch Name" type="text" id="branchName" name="branchName" required />                      
                         <InputField label="Branch Location" type="text" id="branchLocation" name="branchLocation" required />
-
-                      <SubmitButton type="submit" value={"Add Branch"}>Add Branch</SubmitButton>
+                        <InputField label="Manager ID" type="text" id="managerId" name="managerId" required />
+                      <SubmitButton type="submit" value={"Add Branch"} onclick={addData} />
                     </Box>
                   </form>
-                </Paper>
+                </Box>
               </Box>
-            </Paper>
-        </Box>
+            </Box>
+        </Paper>
       </Modal>
     </div>
   );

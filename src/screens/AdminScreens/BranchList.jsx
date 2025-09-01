@@ -1,27 +1,24 @@
-import React, {useEffect, useState} from 'react'
+import React, {use, useEffect, useState} from 'react'
 import ResponsiveAppBar from '../../components/Navbar/AdminNavbar.jsx';
 import NavigationBar from '../../components/Drawers/AdminDrawer.jsx';
 import { Box, Paper } from '@mui/material';
 import DataTable from '../../components/Table/DataTable.jsx';
-import axios from 'axios';
 import SubmitButton from '../../components/Buttons/SubmitButton.jsx'
 import DataAddingModal from '../../components/Modals/DataAddingModal.jsx'
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchBranches } from '../../store/Slices/BranchSlice.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
+import { toast, Bounce } from 'react-toastify';
+import { resetBranchState } from '../../store/Slices/BranchSlice.jsx';
 
 const BranchListScreen = () => {
-    const [data, setData] = useState([]);
     const [columns, setColumns] = useState([]);
+    const dispatch = useDispatch();
 
-    const getData = async () => {
-        try {
-            const response = await axios.get('http://localhost:3000/branches');
-            setData(response.data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
+    const { branches, isLoading, isError, isSuccess, errorMessage } = useSelector((state) => state.Branch);
 
     const setData1 = () => {
-        const newArray = data.map((e,i) => {
+        const newArray = branches.map((e,i) => {
             return {
                 id: e.id,
                 name: e.name,
@@ -37,12 +34,49 @@ const BranchListScreen = () => {
     const handleClose = () => setOpen(false);
 
     useEffect(() => {
-        getData();
-    }, []);
+        dispatch(fetchBranches());
+        dispatch(resetBranchState());
+    }, [dispatch]);
 
     useEffect(() => {
         setData1();
-    }, [data]);
+    }, [branches]);
+
+    useEffect(() => {
+      if (isSuccess) {
+        toast.success('Data Successfully fetched!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      } if (isError) {
+        toast.error('Message: ' + errorMessage + " data", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
+
+    }, [isError]);
+
+    
+
+    if (isLoading) {
+      return <Loader />;
+    }
+
 
   return (
     <>

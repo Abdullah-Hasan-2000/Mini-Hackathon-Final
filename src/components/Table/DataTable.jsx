@@ -18,7 +18,7 @@ export default function BasicTable({data}) {
         <TableHead>
           <TableRow>
             {columns.map((column, i) => {
-                return <TableCell align="right" key={i}>{column.toUpperCase()}</TableCell>;
+                return <TableCell align="center" key={i}>{column.toUpperCase()}</TableCell>;
             })}
           </TableRow>
         </TableHead>
@@ -28,12 +28,12 @@ export default function BasicTable({data}) {
               key={e.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" align='center'>
                 {e.id}
               </TableCell>
-              <TableCell align="right">{e.name}</TableCell>
-              <TableCell align="right">{e.location}</TableCell>
-              <TableCell align="right">{e.managerId}</TableCell>
+              <TableCell align="center">{e.name}</TableCell>
+              <TableCell align="center">{e.location}</TableCell>
+              <TableCell align="center">{e.managerId}</TableCell>
             </TableRow>
           ))}
         </TableBody>

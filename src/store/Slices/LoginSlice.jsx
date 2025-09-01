@@ -111,7 +111,7 @@ export const signupUser = createAsyncThunk('signup/signupUser', async ({email, p
         const docRef = doc(db, "users", userCredential.user.uid);
         await setDoc(docRef, { email, type: "user" });
     } catch (error) {
-        thunkAPI.rejectWithValue(error.message);
+        return thunkAPI.rejectWithValue(error.message);
     }
 })
 

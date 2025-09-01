@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import LoginScreen from './screens/authScreens/LoginScreen.jsx'
 import UserDashboard from './screens/UserScreens/UserDashboard.jsx'
 import AdminDashboard from './screens/AdminScreens/AdminDashboard.jsx'
-import AddBranch from './screens/AdminScreens/AddBranch.jsx'
+
 import BranchList from './screens/AdminScreens/BranchList.jsx'
 import SignUpScreen from './screens/authScreens/SignUpScreen.jsx'
 import ManagerDashboard from './screens/ManagerScreens/ManagerDashboard.jsx'
